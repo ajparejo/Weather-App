@@ -9,11 +9,11 @@ export const Weather = () => {
     info: null
   });
 
-  const [locacion, setLocacion] = useState(null);
+  const [locacion, setLocacion] = useState('');
 
   const [coordenadas, setCoordenadas] = useState({
-    lat: '',
-    lon: ''
+    lat: 0,
+    lon: 0
   });
 
   const changeHandler = (e) => {
@@ -23,30 +23,44 @@ export const Weather = () => {
 
   const horaActual = new Date().getHours();
 
-  const fondo = horaActual > 5 && horaActual < 19 ? "bg-sky-400" : "bg-indigo-800"
+  const fondo = horaActual > 5 && horaActual < 19 ? "bg-[url('./Img/morsky.jpg')]" : "bg-[url('./Img/nigsky.jpg')]"
 
   const options = { method: 'GET' };
 
   useEffect(() => {
-    const url = `http://api.openweathermap.org/geo/1.0/direct?q=${locacion}&limit=5&appid=f5d644c7f153dae4c316e793ce3a8cb8`;
-    const respuesta = fetch(url, options)
-    respuesta
-      .then(response => response.json())
-      .then((data) => { setCoordenadas({ lat: data[0].lat, lon: data[0].lon }) })
-      .catch(console.warn)
+      const url = `http://api.openweathermap.org/geo/1.0/direct?q=${locacion}&limit=5&appid=f5d644c7f153dae4c316e793ce3a8cb8`;
+      const respuesta = fetch(url, options)
+      respuesta
+        .then(response => response.json())
+        .then((data) => { setCoordenadas({ lat: data[0].lat, lon: data[0].lon }) })
+        .catch(console.warn);
+        console.log(coordenadas)
   }, [locacion]);
 
   useEffect(() => {
-    const peticionApiClima = fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coordenadas.lat}&lon=${coordenadas.lon}&appid=f5d644c7f153dae4c316e793ce3a8cb8&units=metric`, options)
-    peticionApiClima
-      .then(response => response.json())
-      .then(data => { setClima(data.main.temp.toFixed()), setIcono({ ico: data.weather[0].icon, info: data.weather[0].main }) })
-      .catch(console.warn);
+      if(coordenadas === null){
+        console.log('prueba')
+        navigator.geolocation.getCurrentPosition((position) => {
+          let curLat = position.coords.latitude;
+          let curLon = position.coords.longitude;
+          const peticionApiClima = fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${curLat}&lon=${curLon}&appid=f5d644c7f153dae4c316e793ce3a8cb8&units=metric`, options)
+          peticionApiClima
+            .then(response => response.json())
+            .then(data => { setClima(data.main.temp.toFixed()), setIcono({ ico: data.weather[0].icon, info: data.weather[0].main }) })
+            .catch(console.warn);
+        });
+      } else {
+        const peticionApiClima = fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coordenadas.lat}&lon=${coordenadas.lon}&appid=f5d644c7f153dae4c316e793ce3a8cb8&units=metric`, options)
+        peticionApiClima
+          .then(response => response.json())
+          .then(data => { setClima(data.main.temp.toFixed()), setIcono({ ico: data.weather[0].icon, info: data.weather[0].main }) })
+          .catch(console.warn);
+      }
   }, [coordenadas]);
 
   return (
     <>
-      <div className={`flex flex-col items-center justify-center w-screen h-screen ${fondo}`}>
+      <div className={`flex flex-col items-center justify-center w-screen h-screen bg-cover ${fondo}`}>
         <h1 className='text-3xl font-bold mb-5'>Weather App</h1>
         <div className='grid md:w-[450px] w-80'>
           <form action="" className='mb-5 text-lg'>
