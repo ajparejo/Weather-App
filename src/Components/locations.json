@@ -1,0 +1,50 @@
+[
+    {
+        "value": "auckland,nz",
+        "name": "Auckland, Nueva Zelanda"
+    },
+    {
+        "value": "berlin,de",
+        "name": "Berlin, Alemania"
+    },
+    {
+        "value": "bogota,co",
+        "name": "Bogota, Colombia"
+    },
+    {
+        "value": "buenos aires,ar",
+        "name": "Buenos Aires, Argentina"
+    },
+    {
+        "value": "caracas,ve",
+        "name": "Caracas, Venezuela"
+    },
+    {
+        "value": "dubai,ae",
+        "name": "Dubai, Emiratos Arabes Unidos"
+    },
+    {
+        "value": "mexico,mx",
+        "name": "Ciudad de Mexico, Mexico"
+    },
+    {
+        "value": "madrid,es",
+        "name": "Madrid, España"
+    },
+    {
+        "value": "melbourne,au",
+        "name": "Melbourne, Australia"
+    },
+    {
+        "value": "los angeles,ca,us",
+        "name": "Los Angeles, Estados Unidos"
+    },
+    {
+        "value": "paris,fr",
+        "name": "Paris, Francia"
+    },
+    {
+        "value": "tokyo,jp",
+        "name": "Tokyo, Japon"
+    }
+]
